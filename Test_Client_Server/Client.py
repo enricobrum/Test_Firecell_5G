@@ -8,6 +8,7 @@
 # Librerie utilizzate 
 import ntplib # Libreria per l'utilizzo di server NTP 
 import socket 
+import time
 import argparse # Permette di avviare il programma passando
                 # dei parametri 
 from datetime import datetime # Permette di riconoscere il 
@@ -121,6 +122,7 @@ def run_test_cycle(host, tcp_port, udp_port,traffic):
                 for _ in range(n_test):
                     client_send_timestamp,client_recv_timestamp = test_tcp(client_socket,ntp_client)
                     file.write('TCP'+','+traffic+','+str(client_send_timestamp)+','+str(client_recv_timestamp)+'\n')
+                    time.sleep(1)
             finally:
                 client_socket.close()
                 print("Connessione al server chiusa dopo l'echo test")
