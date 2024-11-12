@@ -42,11 +42,14 @@ def test_tcp(client_socket,ntp_client):
                                    # buon fine
         message = "X" * payload_size # Generazione di un
                                      # pacchetto da 10 Byte
-        client_socket.sendall(message.encode('utf-8'))
-        response = client_socket.recv(1024)
-        client_recv_timestamp = get_ntp_timestamp(ntp_client)
-        if client_recv_timestamp != 0:
-            return client_send_timestamp.tx_time,client_recv_timestamp.tx_time
+        try:
+            client_socket.sendall(message.encode('utf-8'))
+            response = client_socket.recv(1024)
+            client_recv_timestamp = get_ntp_timestamp(ntp_client)
+            if client_recv_timestamp != 0:
+                return client_send_timestamp.tx_time,client_recv_timestamp.tx_time
+        except Exception as e:
+            print(f"Errore nella connessione:{e}")
     else:
         client_send_timestamp = 0
         client_recv_timestamp = 0

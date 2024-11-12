@@ -91,7 +91,6 @@ def tcp_server(host, port):
         file.close()
         print("\nArresto del server TCP.")
     finally:
-        
         server_socket.close()
 #_____________________________________________________________________________
 #Funzione per l'avvio del server UDP sull'indirizzo IP e porta passati come 
