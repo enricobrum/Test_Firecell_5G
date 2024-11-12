@@ -43,6 +43,7 @@ def handle_tcp_connection(server_socket,client_address,ntp_client,file):
     try:
         while True:
             data = server_socket.recvfrom(1024)
+            
             if data != 0:
                 # Ottieni il timestamp NTP attuale
                 server_recv_timestamp = get_ntp_timestamp(ntp_client)
@@ -87,8 +88,10 @@ def tcp_server(host, port):
             client_socket, client_address = server_socket.accept()
             threading.Thread(target=handle_tcp_connection, args=(client_socket, client_address, ntp_client,file)).start()
     except KeyboardInterrupt:
+        file.close()
         print("\nArresto del server TCP.")
     finally:
+        
         server_socket.close()
 #_____________________________________________________________________________
 #Funzione per l'avvio del server UDP sull'indirizzo IP e porta passati come 
