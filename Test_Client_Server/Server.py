@@ -138,4 +138,4 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     threading.Thread(target=tcp_server, args=(args.server_host, args.tcp_port)).start()
-    threading.Thread(target=udp_server, args=(args.server_host, args.udp_port)).start()
+    #threading.Thread(target=udp_server, args=(args.server_host, args.udp_port)).start()
