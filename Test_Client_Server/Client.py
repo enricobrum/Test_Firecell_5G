@@ -120,7 +120,7 @@ def run_test_cycle(host, tcp_port, udp_port,traffic):
             try:
                 for _ in range(n_test):
                     client_send_timestamp,client_recv_timestamp = test_tcp(client_socket,ntp_client)
-                    file.write('TCP'+','+traffic+','+client_send_timestamp.tx_time+','+client_recv_timestamp.tx_time+'\n')
+                    file.write('TCP'+','+traffic+','+client_send_timestamp+','+client_recv_timestamp+'\n')
             finally:
                 client_socket.close()
                 print("Connessione al server chiusa dopo l'echo test")
