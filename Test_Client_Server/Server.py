@@ -30,7 +30,7 @@ def get_ntp_timestamp(ntp_client): # ntp_client: oggetto per
     return response 
 #___________________________________________________________
 # Funzione per la gestione della connessione TCP
-def handle_tcp_connection(server_socket,client_address,ntp_client):
+def handle_tcp_connection(server_socket,client_address,ntp_client,file):
     """
     Gestisce una connessione TCP con il client.
 
@@ -50,6 +50,7 @@ def handle_tcp_connection(server_socket,client_address,ntp_client):
                     # Risponde al client con il timestamp del server
                     server_send_timestamp = get_ntp_timestamp(ntp_client)
                     server_socket.sendto(str(server_send_timestamp.tx_time).encode(), client_address)
+                    file.write('TCP'+','+server_send_timestamp+','+server_recv_timestamp+'\n')
                 else:
                     server_socket.sendto(str("0").encode(), client_address)
     except Exception as e:
@@ -57,11 +58,10 @@ def handle_tcp_connection(server_socket,client_address,ntp_client):
     finally:
         server_socket.close()
         print(f"Connessione TCP chiusa con: {client_address}")
-    return server_recv_timestamp.tx_time,server_send_timestamp.tx_time
 #_______________________________________________________________________
 #Funzione per l'avvio del server TCP sull'indirizzo IP e porta passati come 
 #argomenti, rispettivamente, host e port
-def tcp_server(host, port):
+def tcp_server(host, port, file):
     """
     Avvia un server TCP.
 
@@ -70,6 +70,13 @@ def tcp_server(host, port):
         port (int): Porta su cui il server e' in ascolto.
     """
     ntp_client = ntplib.NTPClient()
+    data_corrente = datetime.now()
+    data_stringa = data_corrente.strftime("%Y-%m-%d")
+    filecsv="server_istanti_temporali_"+data_stringa+".csv"
+    file=open(filecsv,"a")
+    if file.tell()==0:
+        file.write("server_send_timestamp,server_recv_timestamp\n")
+        print("File csv creato.")
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server_socket.bind((host, port))
     server_socket.listen(5)
@@ -78,7 +85,7 @@ def tcp_server(host, port):
     try:
         while True:
             client_socket, client_address = server_socket.accept()
-            threading.Thread(target=handle_tcp_connection, args=(client_socket, client_address, ntp_client)).start()
+            threading.Thread(target=handle_tcp_connection, args=(client_socket, client_address, ntp_client,file)).start()
     except KeyboardInterrupt:
         print("\nArresto del server TCP.")
     finally:
@@ -86,7 +93,7 @@ def tcp_server(host, port):
 #_____________________________________________________________________________
 #Funzione per l'avvio del server UDP sull'indirizzo IP e porta passati come 
 #argomenti, rispettivamente, host e port
-def udp_server(host, port):
+def udp_server(host, port,ntp_client):
     """
     Avvia un server UDP.
 
@@ -94,6 +101,14 @@ def udp_server(host, port):
         host (str): Indirizzo IP su cui il server e' in ascolto.
         port (int): Porta su cui il server e' in ascolto.
     """
+    ntp_client =ntplib.NTPClient()
+    data_corrente = datetime.now()
+    data_stringa = data_corrente.strftime("%Y-%m-%d")
+    filecsv="server_istanti_temporali_"+data_stringa+".csv"
+    file=open(filecsv,"a")
+    if file.tell()==0:
+        file.write("server_send_timestamp,server_recv_timestamp\n")
+        print("File csv creato.")
     udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     udp_socket.bind((host, port))
     print(f"Server UDP in ascolto su {host}:{port}")
@@ -101,15 +116,20 @@ def udp_server(host, port):
     try:
         while True:
             data, client_address = udp_socket.recvfrom(1024)
+            server_recv_timestamp = get_ntp_timestamp(ntp_client)
             print(f"Ricevuto messaggio da {client_address}: {data.decode()}")
+            server_send_timestamp = get_ntp_timestamp(ntp_client)
             udp_socket.sendto(data, client_address)
+            file.write('UDP'+','+server_send_timestamp+','+server_recv_timestamp+'\n')
     except KeyboardInterrupt:
         print("\nArresto del server UDP.")
     finally:
         udp_socket.close()
+    
 #__________________________________________________________________________________
 # Funzione principale per l'avvio del programma server
 if __name__ == "__main__":
+    
     parser = argparse.ArgumentParser(description='Client TCP e UDP per il test della connessione.')
     parser.add_argument('--server_host', type=str, required=True, help='Indirizzo IP del server')
     parser.add_argument('--tcp_port', type=int, required=True, help='Porta del server TCP')
