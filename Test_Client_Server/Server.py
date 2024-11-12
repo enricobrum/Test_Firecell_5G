@@ -93,7 +93,7 @@ def tcp_server(host, port):
 #_____________________________________________________________________________
 #Funzione per l'avvio del server UDP sull'indirizzo IP e porta passati come 
 #argomenti, rispettivamente, host e port
-def udp_server(host, port,ntp_client):
+def udp_server(host, port):
     """
     Avvia un server UDP.
 
