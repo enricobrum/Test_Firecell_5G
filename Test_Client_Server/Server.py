@@ -61,7 +61,7 @@ def handle_tcp_connection(server_socket,client_address,ntp_client,file):
 #_______________________________________________________________________
 #Funzione per l'avvio del server TCP sull'indirizzo IP e porta passati come 
 #argomenti, rispettivamente, host e port
-def tcp_server(host, port, file):
+def tcp_server(host, port):
     """
     Avvia un server TCP.
 
