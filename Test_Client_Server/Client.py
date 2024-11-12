@@ -29,7 +29,7 @@ def get_ntp_timestamp(ntp_client): # ntp_client: oggetto per
     return response 
 #___________________________________________________________    
 # Funzione che implementa il test tramite connessione TCP
-def test_tcp(client_socket,ntp_client):
+def test_tcp(client_socket,ntp_client,file):
     # Richiesta al server NTP prima di mandare il messaggio 
     # di test
     payload_size = 10 # Dimensione in Byte del messaggio 
@@ -47,17 +47,10 @@ def test_tcp(client_socket,ntp_client):
             response = client_socket.recv(1024)
             client_recv_timestamp = get_ntp_timestamp(ntp_client)
             if client_recv_timestamp != 0:
-                return client_send_timestamp.tx_time,client_recv_timestamp.tx_time
-            else:
-                client_send_timestamp = 0
-                client_recv_timestamp = 0
-                return client_send_timestamp, client_recv_timestamp
+                file.write('TCP'+','+traffic+','+str(client_send_timestamp)+','+str(client_recv_timestamp)+'\n')
         except Exception as e:
             print(f"Errore nella connessione:{e}")
-    else:
-        client_send_timestamp = 0
-        client_recv_timestamp = 0
-        return client_send_timestamp, client_recv_timestamp
+
 #___________________________________________________________    
 #Funzione per la connessione TCP con il server
 def connect_to_server(host, port):
@@ -127,8 +120,7 @@ def run_test_cycle(host, tcp_port, udp_port,traffic):
             client_socket = connect_to_server(host, tcp_port)
             try:
                 for _ in range(n_test):
-                    client_send_timestamp,client_recv_timestamp = test_tcp(client_socket,ntp_client)
-                    file.write('TCP'+','+traffic+','+str(client_send_timestamp)+','+str(client_recv_timestamp)+'\n')
+                    test_tcp(client_socket,ntp_client,file)
                     time.sleep(1)
             finally:
                 client_socket.close()
