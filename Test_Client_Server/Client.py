@@ -29,7 +29,7 @@ def get_ntp_timestamp(ntp_client): # ntp_client: oggetto per
     return response 
 #___________________________________________________________    
 # Funzione che implementa il test tramite connessione TCP
-def test_tcp(client_socket,ntp_client,file):
+def test_tcp(client_socket,ntp_client,file,traffic):
     # Richiesta al server NTP prima di mandare il messaggio 
     # di test
     payload_size = 10 # Dimensione in Byte del messaggio 
@@ -120,7 +120,7 @@ def run_test_cycle(host, tcp_port, udp_port,traffic):
             client_socket = connect_to_server(host, tcp_port)
             try:
                 for _ in range(n_test):
-                    test_tcp(client_socket,ntp_client,file)
+                    test_tcp(client_socket,ntp_client,file,traffic)
                     time.sleep(1)
             finally:
                 client_socket.close()
