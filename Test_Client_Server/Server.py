@@ -27,7 +27,7 @@ def get_ntp_timestamp(ntp_client): # ntp_client: oggetto per
     except Exception as e:
         print(f"Errore nella connessione:{e}")
         response = 0
-    return response 
+    return response.tx_time 
 #___________________________________________________________
 # Funzione per la gestione della connessione TCP
 def handle_tcp_connection(server_socket,client_address,ntp_client,file):
@@ -40,23 +40,17 @@ def handle_tcp_connection(server_socket,client_address,ntp_client,file):
         ntp_client : Oggetto client ntp per la richiesta al server
     """
     print(f"TCP Connection from {client_address}")
-    try:
-        while True:
-            data = server_socket.recvfrom(1024)
-            print(f"Messaggio ricevuto: {data.decode()}")
-            # Ottieni il timestamp NTP attuale
-            server_recv_timestamp = get_ntp_timestamp(ntp_client)
-            # Risponde al client con il timestamp del server
-            server_send_timestamp = get_ntp_timestamp(ntp_client)
-            server_socket.sendto(str(server_send_timestamp.tx_time).encode(), client_address)
-            print(f"Messaggio mandato: {str(server_send_timestamp.tx_time)}")
-            file.write('TCP'+','+str(server_send_timestamp.tx_time)+','+str(server_recv_timestamp.tx_time)+'\n')
-    except Exception as e:
-        print(f"Errore nella connessione TCP: {e}")
-    finally:
-        server_socket.close()
-        file.close()
-        print(f"Connessione TCP chiusa con: {client_address}")
+    
+    while True:
+        data = server_socket.recvfrom(1024)
+        print(f"Messaggio ricevuto: {data}")
+        # Ottieni il timestamp NTP attuale
+        server_recv_timestamp = get_ntp_timestamp(ntp_client)
+        # Risponde al client con il timestamp del server
+        server_send_timestamp = get_ntp_timestamp(ntp_client)
+        server_socket.sendto(str(server_send_timestamp.tx_time).encode(), client_address)
+        print(f"Messaggio mandato: {str(server_send_timestamp.tx_time)}")
+        file.write('TCP'+','+str(server_send_timestamp.tx_time)+','+str(server_recv_timestamp.tx_time)+'\n')
 #_______________________________________________________________________
 #Funzione per l'avvio del server TCP sull'indirizzo IP e porta passati come 
 #argomenti, rispettivamente, host e port
@@ -88,8 +82,10 @@ def tcp_server(host, port):
             handle_tcp_connection(client_socket, client_address, ntp_client,file)
 
     except KeyboardInterrupt:
+        file.close()
         print("\nArresto del server TCP.")
     finally:
+        file.close()
         server_socket.close()
 #_____________________________________________________________________________
 #Funzione per l'avvio del server UDP sull'indirizzo IP e porta passati come 
