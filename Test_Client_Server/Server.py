@@ -50,7 +50,7 @@ def handle_tcp_connection(server_socket,client_address,ntp_client,file):
                     # Risponde al client con il timestamp del server
                     server_send_timestamp = get_ntp_timestamp(ntp_client)
                     server_socket.sendto(str(server_send_timestamp.tx_time).encode(), client_address)
-                    file.write('TCP'+','+server_send_timestamp+','+server_recv_timestamp+'\n')
+                    file.write('TCP'+','+str(server_send_timestamp.tx_time)+','+str(server_recv_timestamp.tx_time)+'\n')
                 else:
                     server_socket.sendto(str("0").encode(), client_address)
     except Exception as e:
@@ -120,7 +120,7 @@ def udp_server(host, port):
             print(f"Ricevuto messaggio da {client_address}: {data.decode()}")
             server_send_timestamp = get_ntp_timestamp(ntp_client)
             udp_socket.sendto(data, client_address)
-            file.write('UDP'+','+server_send_timestamp.tx_time+','+server_recv_timestamp.tx_time+'\n')
+            file.write('UDP'+','+str(server_send_timestamp.tx_time)+','+str(server_recv_timestamp.tx_time)+'\n')
     except KeyboardInterrupt:
         print("\nArresto del server UDP.")
     finally:
