@@ -51,13 +51,13 @@ def test_tcp(client_socket,ntp_client):
             else:
                 client_send_timestamp = 0
                 client_recv_timestamp = 0
-                return client_send_timestamp.tx_time, client_recv_timestamp.tx_time
+                return client_send_timestamp, client_recv_timestamp
         except Exception as e:
             print(f"Errore nella connessione:{e}")
     else:
         client_send_timestamp = 0
         client_recv_timestamp = 0
-        return client_send_timestamp.tx_time, client_recv_timestamp.tx_time
+        return client_send_timestamp, client_recv_timestamp
 #___________________________________________________________    
 #Funzione per la connessione TCP con il server
 def connect_to_server(host, port):
@@ -132,7 +132,7 @@ def run_test_cycle(host, tcp_port, udp_port,traffic):
                     time.sleep(1)
             finally:
                 client_socket.close()
-                print("Connessione al server chiusa dopo l'echo test")
+                print("Connessione al server chiusa dopo il test")
 
         elif scelta == '2':
             print("\nEsecuzione Test con protocollo UDP:")
