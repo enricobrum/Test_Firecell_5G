@@ -100,7 +100,7 @@ def udp_server(host, port):
 
     try:
         while True:
-            data, client_address = udp_socket.recvfrom(65536)
+            data, client_address = udp_socket.recvfrom(1024)
             print(f"Ricevuto messaggio da {client_address}: {data.decode()}")
             udp_socket.sendto(data, client_address)
     except KeyboardInterrupt:
