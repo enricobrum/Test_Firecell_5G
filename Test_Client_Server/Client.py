@@ -81,7 +81,7 @@ def test_udp(host, port, ntp_client):
     """
     udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     client_send_timestamp = get_ntp_timestamp(ntp_client)
-    udp_socket.sendto(client_send_timestamp.encode(), (host, port))
+    udp_socket.sendto(client_send_timestamp.tx_time.encode(), (host, port))
     response = udp_socket.recvfrom(1024)
     client_recv_timestamp = get_ntp_timestamp(ntp_client)
     udp_socket.close()
@@ -129,7 +129,7 @@ def run_test_cycle(host, tcp_port, udp_port,traffic):
             print("\nEsecuzione Test con protocollo UDP:")
             for _ in range(n_test):
                     client_send_timestamp,client_recv_timestamp = test_udp(host,udp_port,ntp_client)
-                    file.write('UDP'+','+traffic+','+client_send_timestamp.tx_time+','+client_recv_timestamp.tx_time+'\n')
+                    file.write('UDP'+','+traffic+','+client_send_timestamp+','+client_recv_timestamp+'\n')
         elif scelta == '3':
             file.close()
             print("Uscita dal programma.")
