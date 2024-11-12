@@ -48,9 +48,9 @@ def handle_tcp_connection(server_socket,client_address,ntp_client,file):
         server_recv_timestamp = get_ntp_timestamp(ntp_client)
         # Risponde al client con il timestamp del server
         server_send_timestamp = get_ntp_timestamp(ntp_client)
-        server_socket.sendto(str(server_send_timestamp.tx_time).encode(), client_address)
-        print(f"Messaggio mandato: {str(server_send_timestamp.tx_time)}")
-        file.write('TCP'+','+str(server_send_timestamp.tx_time)+','+str(server_recv_timestamp.tx_time)+'\n')
+        server_socket.sendto(str(server_send_timestamp).encode(), client_address)
+        print(f"Messaggio mandato: {str(server_send_timestamp)}")
+        file.write('TCP'+','+str(server_send_timestamp)+','+str(server_recv_timestamp)+'\n')
 #_______________________________________________________________________
 #Funzione per l'avvio del server TCP sull'indirizzo IP e porta passati come 
 #argomenti, rispettivamente, host e port
