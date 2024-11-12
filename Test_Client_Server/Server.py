@@ -43,18 +43,14 @@ def handle_tcp_connection(server_socket,client_address,ntp_client,file):
     try:
         while True:
             data = server_socket.recvfrom(1024)
-            if data != 0:
-                print(f"Messaggio ricevuto: {data.decode()}")
-                # Ottieni il timestamp NTP attuale
-                server_recv_timestamp = get_ntp_timestamp(ntp_client)
-                if server_recv_timestamp != 0:
-                    # Risponde al client con il timestamp del server
-                    server_send_timestamp = get_ntp_timestamp(ntp_client)
-                    server_socket.sendto(str(server_send_timestamp.tx_time).encode(), client_address)
-                    print(f"Messaggio mandato: {str(server_send_timestamp.tx_time)}")
-                    file.write('TCP'+','+str(server_send_timestamp.tx_time)+','+str(server_recv_timestamp.tx_time)+'\n')
-                else:
-                    server_socket.sendto(str("0").encode(), client_address)
+            print(f"Messaggio ricevuto: {data.decode()}")
+            # Ottieni il timestamp NTP attuale
+            server_recv_timestamp = get_ntp_timestamp(ntp_client)
+            # Risponde al client con il timestamp del server
+            server_send_timestamp = get_ntp_timestamp(ntp_client)
+            server_socket.sendto(str(server_send_timestamp.tx_time).encode(), client_address)
+            print(f"Messaggio mandato: {str(server_send_timestamp.tx_time)}")
+            file.write('TCP'+','+str(server_send_timestamp.tx_time)+','+str(server_recv_timestamp.tx_time)+'\n')
     except Exception as e:
         print(f"Errore nella connessione TCP: {e}")
     finally:
