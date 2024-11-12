@@ -103,7 +103,7 @@ def run_test_cycle(host, tcp_port, udp_port,traffic):
         udp_port (int): Porta del server UDP.
         traffic (str): Scenario di traffico del test corrente
     """
-    n_test=1000
+    n_test=5
     ntp_client =ntplib.NTPClient()
     data_corrente = datetime.now()
     data_stringa = data_corrente.strftime("%Y-%m-%d")
