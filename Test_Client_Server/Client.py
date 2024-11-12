@@ -120,7 +120,7 @@ def run_test_cycle(host, tcp_port, udp_port,traffic):
             try:
                 for _ in range(n_test):
                     client_send_timestamp,client_recv_timestamp = test_tcp(client_socket,ntp_client)
-                    file.write('TCP'+','+traffic+','+client_send_timestamp+','+client_recv_timestamp+'\n')
+                    file.write('TCP'+','+traffic+','+client_send_timestamp.tx_time+','+client_recv_timestamp.tx_time+'\n')
             finally:
                 client_socket.close()
                 print("Connessione al server chiusa dopo l'echo test")
@@ -129,7 +129,7 @@ def run_test_cycle(host, tcp_port, udp_port,traffic):
             print("\nEsecuzione Test con protocollo UDP:")
             for _ in range(n_test):
                     client_send_timestamp,client_recv_timestamp = test_udp(host,udp_port,ntp_client)
-                    file.write('UDP'+','+traffic+','+client_send_timestamp+','+client_recv_timestamp+'\n')
+                    file.write('UDP'+','+traffic+','+client_send_timestamp.tx_time+','+client_recv_timestamp.tx_time+'\n')
         elif scelta == '3':
             file.close()
             print("Uscita dal programma.")

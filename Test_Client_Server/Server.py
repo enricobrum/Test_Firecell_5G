@@ -120,7 +120,7 @@ def udp_server(host, port):
             print(f"Ricevuto messaggio da {client_address}: {data.decode()}")
             server_send_timestamp = get_ntp_timestamp(ntp_client)
             udp_socket.sendto(data, client_address)
-            file.write('UDP'+','+server_send_timestamp+','+server_recv_timestamp+'\n')
+            file.write('UDP'+','+server_send_timestamp.tx_time+','+server_recv_timestamp.tx_time+'\n')
     except KeyboardInterrupt:
         print("\nArresto del server UDP.")
     finally:
