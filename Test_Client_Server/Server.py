@@ -85,7 +85,7 @@ def tcp_server(host, port):
         while True:
             file=open(filecsv,"a")
             client_socket, client_address = server_socket.accept()
-            threading.Thread(target=handle_tcp_connection, args=(client_socket, client_address, ntp_client,file)).start()
+            handle_tcp_connection(client_socket, client_address, ntp_client,file)
 
     except KeyboardInterrupt:
         print("\nArresto del server TCP.")
@@ -138,5 +138,5 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    threading.Thread(target=tcp_server, args=(args.server_host, args.tcp_port)).start()
+    tcp_server(args.server_host, args.tcp_port)
     #threading.Thread(target=udp_server, args=(args.server_host, args.udp_port)).start()
