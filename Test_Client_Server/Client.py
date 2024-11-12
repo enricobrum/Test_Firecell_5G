@@ -48,12 +48,16 @@ def test_tcp(client_socket,ntp_client):
             client_recv_timestamp = get_ntp_timestamp(ntp_client)
             if client_recv_timestamp != 0:
                 return client_send_timestamp.tx_time,client_recv_timestamp.tx_time
+            else:
+                client_send_timestamp = 0
+                client_recv_timestamp = 0
+                return client_send_timestamp.tx_time, client_recv_timestamp.tx_time
         except Exception as e:
             print(f"Errore nella connessione:{e}")
     else:
         client_send_timestamp = 0
         client_recv_timestamp = 0
-        return client_send_timestamp, client_recv_timestamp
+        return client_send_timestamp.tx_time, client_recv_timestamp.tx_time
 #___________________________________________________________    
 #Funzione per la connessione TCP con il server
 def connect_to_server(host, port):

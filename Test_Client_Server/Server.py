@@ -43,7 +43,7 @@ def handle_tcp_connection(server_socket,client_address,ntp_client,file):
     
     while True:
         data = server_socket.recvfrom(1024)
-        print(f"Messaggio ricevuto: {data}")
+        print(f"Messaggio ricevuto: {data.decode()}")
         # Ottieni il timestamp NTP attuale
         server_recv_timestamp = get_ntp_timestamp(ntp_client)
         # Risponde al client con il timestamp del server
