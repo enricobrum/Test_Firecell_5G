@@ -58,6 +58,7 @@ def handle_tcp_connection(server_socket,client_address,ntp_client,file):
         print(f"Errore nella connessione TCP: {e}")
     finally:
         server_socket.close()
+        file.close()
         print(f"Connessione TCP chiusa con: {client_address}")
 #_______________________________________________________________________
 #Funzione per l'avvio del server TCP sull'indirizzo IP e porta passati come 
@@ -88,7 +89,7 @@ def tcp_server(host, port):
             file=open(filecsv,"a")
             client_socket, client_address = server_socket.accept()
             threading.Thread(target=handle_tcp_connection, args=(client_socket, client_address, ntp_client,file)).start()
-            file.close()
+
     except KeyboardInterrupt:
         print("\nArresto del server TCP.")
     finally:
