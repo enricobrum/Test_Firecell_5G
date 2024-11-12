@@ -41,7 +41,7 @@ def test_tcp(client_socket,ntp_client):
                                    # al server è andata a
                                    # buon fine
         message = "X" * payload_size # Generazione di un
-                                     # pacchetto da 10 Byte
+                                     # pacchetto da 10 Bytes
         try:
             client_socket.sendall(message)
             response = client_socket.recv(1024)
