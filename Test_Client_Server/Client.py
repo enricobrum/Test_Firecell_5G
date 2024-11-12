@@ -43,7 +43,7 @@ def test_tcp(client_socket,ntp_client,file):
         message = "X" * payload_size # Generazione di un
                                      # pacchetto da 10 Bytes
         try:
-            client_socket.sendall(message)
+            client_socket.sendall(message.encode('utf-8'))
             response = client_socket.recv(1024)
             client_recv_timestamp = get_ntp_timestamp(ntp_client)
             if client_recv_timestamp != 0:
