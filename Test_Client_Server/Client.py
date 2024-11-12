@@ -89,7 +89,7 @@ def test_udp(host, port, ntp_client):
 #_____________________________________________________________________
 # Programma principale che permette la gestione del test, le connessioni 
 # con i vari protocolli e la ricezione di parametri in ingresso all'avvio
-def run_test_cycle(host, tcp_port, udp_port, interval, traffic, payload):
+def run_test_cycle(host, tcp_port, udp_port,traffic):
     """
     Esegue un ciclo di test di rete per ciascun intervallo specificato.
 
