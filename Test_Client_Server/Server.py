@@ -72,21 +72,15 @@ def tcp_server(host, port):
         print("File csv creato.")
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server_socket.bind((host, port))
-    server_socket.listen(5)
+    server_socket.listen(1)
     print(f"Server TCP in ascolto su {host}:{port}")
     file.close()
-    try:
-        while True:
-            file=open(filecsv,"a")
-            client_socket, client_address = server_socket.accept()
-            handle_tcp_connection(client_socket, client_address, ntp_client,file)
-
-    except KeyboardInterrupt:
+    while True:
+        file=open(filecsv,"a")
+        client_socket, client_address = server_socket.accept()
+        handle_tcp_connection(client_socket, client_address, ntp_client,file)
         file.close()
-        print("\nArresto del server TCP.")
-    finally:
-        file.close()
-        server_socket.close()
+    
 #_____________________________________________________________________________
 #Funzione per l'avvio del server UDP sull'indirizzo IP e porta passati come 
 #argomenti, rispettivamente, host e port
