@@ -134,6 +134,7 @@ def udp_server(host, port):
 #__________________________________________________________________________________
 # Funzione principale per l'avvio del programma server
 if __name__ == "__main__":
+    
     parser = argparse.ArgumentParser(description='Client TCP e UDP per il test della connessione.')
     parser.add_argument('--server_host', type=str, required=True, help='Indirizzo IP del server')
     parser.add_argument('--tcp_port', type=int, required=True, help='Porta del server TCP')
