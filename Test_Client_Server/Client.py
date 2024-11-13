@@ -118,13 +118,11 @@ def run_test_cycle(host, tcp_port, udp_port,traffic):
         if scelta == '1':
             print("\nEsecuzione Test con protocollo TCP:")
             client_socket = connect_to_server(host, tcp_port)
-            try:
-                for _ in range(n_test):
-                    test_tcp(client_socket,ntp_client,file,traffic)
-                    time.sleep(1)
-            finally:
-                client_socket.close()
-                print("Connessione al server chiusa dopo il test")
+            for _ in range(n_test):
+                test_tcp(client_socket,ntp_client,file,traffic)
+                time.sleep(1)
+            client_socket.close()
+            print("Connessione al server chiusa dopo il test")
 
         elif scelta == '2':
             print("\nEsecuzione Test con protocollo UDP:")
