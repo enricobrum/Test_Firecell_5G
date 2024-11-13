@@ -55,4 +55,3 @@ function ini_loadfile {
     done <$1
 }                                       #funzione utilizzata per caricare il file di configurazione in modo da utilizzare poi le varie funzioni realizzate
 ini_loadfile config.ini
-echo "$inidb"
