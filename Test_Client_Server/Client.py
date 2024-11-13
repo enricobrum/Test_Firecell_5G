@@ -161,4 +161,4 @@ if __name__ == "__main__":
     parser.add_argument('--payload', nargs='+', required=True, help='Dimensioni di payload')
     args = parser.parse_args()
 
-    run_test_cycle(args.server_host, args.tcp_port, args.udp_port, args.interval, args.traffic, args.payload)
+    run_test_cycle(args.server_host, args.tcp_port, args.udp_port, args.traffic)
