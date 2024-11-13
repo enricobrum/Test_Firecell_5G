@@ -24,10 +24,11 @@ def get_ntp_timestamp(ntp_client): # ntp_client: oggetto per
     try:
         response = ntp_client.request(server, version=3,
                                       timeout=1)
+        response=response.tx_time
     except Exception as e:
         print(f"Errore nella connessione:{e}")
         response = 0
-    return response.tx_time 
+    return response 
 #___________________________________________________________
 # Funzione per la gestione della connessione TCP
 def handle_tcp_connection(server_socket,client_address,ntp_client,file):
