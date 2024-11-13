@@ -84,12 +84,14 @@ def tcp_server(host, port):
     file.close()
     try:
         while True:
+            file=open(filecsv,'a')
             client_socket, client_address = server_socket.accept()
             threading.Thread(target=handle_tcp_connection,args=(client_socket, client_address, ntp_client,file)).start()
             file.close()
     except KeyboardInterrupt:
         print("\nArrtesto del server")
     finally:
+        file.close()
         server_socket.close()
     
 #_____________________________________________________________________________
