@@ -13,9 +13,9 @@ source Lettura_File_Config.sh #Lettura del file di configurazione contenenti
                               #i valori utilizzati per i test
 ini_printdb
 #_______________________________________________________________________________
-ip_server=$(ini_get_value server ip) #indirizzo IP del server di echo
-port_tcp=$(ini_get_value server port_tcp) #port in cui si pone il server di echo
-port_udp=$(ini_get_value server port_udp)
+ip_server=$(ini_get_value  ip) #indirizzo IP del server di echo
+port_tcp=$(ini_get_value  port_tcp) #port in cui si pone il server di echo
+port_udp=$(ini_get_value  port_udp)
 #avvio del server con i parametri ottenuti da file di configurazione
 
 python3 Server.py --server_host "$ip_server" --tcp_port 8080 --udp_port 8081 
