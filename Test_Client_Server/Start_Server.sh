@@ -13,9 +13,9 @@ source Lettura_File_Config.sh #Lettura del file di configurazione contenenti
                               #i valori utilizzati per i test
 #_______________________________________________________________________________
 ip_server=$(ini_get_value server ip) #indirizzo IP del server di echo
-port_t=$(ini_get_value server port_tcp) #port in cui si pone il server di echo
-port_u=$(ini_get_value server port_udp)
+port_tcp=$(ini_get_value server port_tcp) #port in cui si pone il server di echo
+port_udp=$(ini_get_value server port_udp)
 #avvio del server con i parametri ottenuti da file di configurazione
-python3 Server.py --server_host "$ip_server" --tcp_port "$port_t" --udp_port "$port_u" 
+python3 Server.py --server_host "$ip_server" --tcp_port "$port_tcp" --udp_port "$port_udp" 
 wait $!
 
