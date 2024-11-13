@@ -79,7 +79,7 @@ def tcp_server(host, port):
         print("File csv creato.")
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server_socket.bind((host, port))
-    server_socket.listen(1)
+    server_socket.listen(5)
     print(f"Server TCP in ascolto su {host}:{port}")
     file.close()
     try:
@@ -87,7 +87,6 @@ def tcp_server(host, port):
             file=open(filecsv,'a')
             client_socket, client_address = server_socket.accept()
             threading.Thread(target=handle_tcp_connection,args=(client_socket, client_address, ntp_client,file)).start()
-            file.close()
     except KeyboardInterrupt:
         print("\nArrtesto del server")
     finally:
