@@ -43,7 +43,7 @@ def handle_tcp_connection(server_socket,client_address,ntp_client,file):
     try:
         while True:
             data, _ = server_socket.recvfrom(1024)
-            if data != 0:
+            if not data:
                 print(f"Messaggio ricevuto: {data.decode()}")
                 # Ottieni il timestamp NTP attuale
                 server_recv_timestamp = get_ntp_timestamp(ntp_client)
@@ -84,11 +84,11 @@ def tcp_server(host, port):
     file.close()
     try:
         while True:
-            file=open(filecsv,'a')
+            file=open(filecsv,"a")
             client_socket, client_address = server_socket.accept()
             threading.Thread(target=handle_tcp_connection,args=(client_socket, client_address, ntp_client,file)).start()
     except KeyboardInterrupt:
-        print("\nArrtesto del server")
+        print("\nArrtesto del server TCP")
     finally:
         file.close()
         server_socket.close()
