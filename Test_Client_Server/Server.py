@@ -57,6 +57,7 @@ def handle_tcp_connection(server_socket,client_address,ntp_client,file):
         print(f"Errore nella connessione TCP: {e}")
     finally:
         server_socket.close()
+        file.close()
         print(f"Connessione chiusa con:{client_address}")
 
 #_______________________________________________________________________
