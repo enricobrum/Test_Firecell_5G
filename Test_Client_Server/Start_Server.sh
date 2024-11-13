@@ -11,6 +11,7 @@
 chmod +x Lettura_File_Config.sh 
 source Lettura_File_Config.sh #Lettura del file di configurazione contenenti
                               #i valori utilizzati per i test
+ini_printdb
 #_______________________________________________________________________________
 ip_server=$(ini_get_value server ip) #indirizzo IP del server di echo
 port_tcp=$(ini_get_value server port_tcp) #port in cui si pone il server di echo
