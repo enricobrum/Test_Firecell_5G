@@ -71,6 +71,7 @@ def tcp_server(host, port):
         host (str): Indirizzo IP su cui il server e' in ascolto.
         port (int): Porta su cui il server e' in ascolto.
     """
+    port=int(port)
     ntp_client = ntplib.NTPClient()
     data_corrente = datetime.now()
     data_stringa = data_corrente.strftime("%Y-%m-%d")
@@ -106,6 +107,7 @@ def udp_server(host, port):
         host (str): Indirizzo IP su cui il server e' in ascolto.
         port (int): Porta su cui il server e' in ascolto.
     """
+    port=int(port)
     ntp_client =ntplib.NTPClient()
     data_corrente = datetime.now()
     data_stringa = data_corrente.strftime("%Y-%m-%d")
