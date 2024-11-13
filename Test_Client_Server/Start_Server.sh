@@ -13,6 +13,7 @@ source Lettura_File_Config.sh #Lettura del file di configurazione contenenti
                               #i valori utilizzati per i test
 #_______________________________________________________________________________
 ip_server=$(ini_get_value server ip) #indirizzo IP del server di echo
+echo "$ip_server"
 port_tcp=$(ini_get_value server port_tcp) #port in cui si pone il server di echo
 port_udp=$(ini_get_value server port_udp)
 #avvio del server con i parametri ottenuti da file di configurazione

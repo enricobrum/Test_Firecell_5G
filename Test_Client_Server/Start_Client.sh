@@ -3,6 +3,7 @@ chmod +x Lettura_File_Config.sh
 source Lettura_File_Config.sh
 #____________________________________________
 ip_server=$(ini_get_value server ip)
+echo "$ip_server"
 port_tcp=$(ini_get_value server port_tcp)
 port_udp=$(ini_get_value server port_udp)
 intervals=$(ini_get_value client intervals)
