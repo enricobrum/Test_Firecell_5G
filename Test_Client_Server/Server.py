@@ -71,7 +71,6 @@ def tcp_server(host, port):
         host (str): Indirizzo IP su cui il server e' in ascolto.
         port (int): Porta su cui il server e' in ascolto.
     """
-    port=int(port)
     ntp_client = ntplib.NTPClient()
     data_corrente = datetime.now()
     data_stringa = data_corrente.strftime("%Y-%m-%d")
@@ -107,7 +106,6 @@ def udp_server(host, port):
         host (str): Indirizzo IP su cui il server e' in ascolto.
         port (int): Porta su cui il server e' in ascolto.
     """
-    port=int(port)
     ntp_client =ntplib.NTPClient()
     data_corrente = datetime.now()
     data_stringa = data_corrente.strftime("%Y-%m-%d")
@@ -139,8 +137,8 @@ if __name__ == "__main__":
     
     parser = argparse.ArgumentParser(description='Client TCP e UDP per il test della connessione.')
     parser.add_argument('--server_host', type=str, required=True, help='Indirizzo IP del server')
-    parser.add_argument('--tcp_port', type=str, required=True, help='Porta del server TCP')
-    parser.add_argument('--udp_port', type=str, required=True, help='Porta del server UDP')
+    parser.add_argument('--tcp_port', type=int, required=True, help='Porta del server TCP')
+    parser.add_argument('--udp_port', type=int, required=True, help='Porta del server UDP')
 
     args = parser.parse_args()
 
