@@ -154,7 +154,9 @@ if __name__ == "__main__":
     parser.add_argument('--server_host', type=str, required=True, help='Indirizzo IP del server')
     parser.add_argument('--tcp_port', type=int, required=True, help='Porta del server TCP')
     parser.add_argument('--udp_port', type=int, required=True, help='Porta del server UDP')
+    parser.add_argument('--interval', nargs='+', required=True, help='Intervalli di tempo tra i messaggi')
     parser.add_argument('--traffic', type=str, required=True, help="Scenario di traffico del test")
+    parser.add_argument('--payload', nargs='+', required=True, help='Dimensioni di payload')
     args = parser.parse_args()
 
-    run_test_cycle(args.server_host, args.tcp_port, args.udp_port, args.traffic)
+    run_test_cycle(args.server_host, args.tcp_port, args.udp_port, args.interval, args.traffic, args.payload)
